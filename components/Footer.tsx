@@ -71,7 +71,14 @@ export default function Footer() {
             <a href={`mailto:${contact.email}`} className="hover:text-white">
               {contact.email}
             </a>
-            <span className="leading-relaxed text-[#9d9ea8]">{contact.addresses[0].value}</span>
+            {contact.addresses.map((address) => (
+              <div key={address.label} className="leading-relaxed text-[#9d9ea8]">
+                <span className="block text-[12px] font-semibold uppercase tracking-wide text-[#b8b9c2]">
+                  {address.label}
+                </span>
+                <span>{address.value}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

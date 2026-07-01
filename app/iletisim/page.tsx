@@ -36,7 +36,9 @@ export default function IletisimPage() {
               </a>
             </ContactRow>
             <ContactRow icon={<FaxIcon className="h-5 w-5" />} label="Faks">
-              {contact.fax}
+              <a href={contact.faxHref} className="hover:text-brand-blue">
+                {contact.fax}
+              </a>
             </ContactRow>
             <ContactRow icon={<MailIcon className="h-5 w-5" />} label="E-Posta">
               <a href={`mailto:${contact.email}`} className="hover:text-brand-blue">

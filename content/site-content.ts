@@ -102,6 +102,7 @@ export const contact = {
   phone: "+90 216 317 60 20",
   phoneHref: "tel:02163176020",
   fax: "+90 216 317 11 33",
+  faxHref: "tel:02163171133",
   email: "info@ortunc.com.tr",
   addresses: [
     {
