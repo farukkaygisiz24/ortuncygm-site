@@ -74,17 +74,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-white px-6 py-16 sm:px-10 lg:py-28">
-        <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.14]" aria-hidden="true">
-          <Image
-            src="/images/logo-watermark-transparent.png"
-            alt=""
-            fill
-            className="object-contain object-center p-2 sm:p-4 lg:p-6"
-            sizes="(max-width: 1410px) 100vw, 1410px"
-          />
-        </div>
-        <div className="relative z-10 mx-auto max-w-6xl">
+      <section className="bg-white px-6 py-16 sm:px-10 lg:py-28">
+        <div className="mx-auto max-w-6xl">
           <p className="mb-3 text-[13px] font-bold uppercase tracking-[.14em] text-brand-blue">Kurumsal</p>
           <h2 className="mb-8 max-w-2xl text-[28px] font-extrabold text-brand-ink sm:text-[36px]">Hakkımızda</h2>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
