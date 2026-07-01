@@ -7,7 +7,7 @@ export default function PageHeader({
 }: {
   breadcrumb: string;
   title: string;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
 }) {
   return (
     <section className="border-b border-brand-line bg-white px-6 pb-8 pt-14 sm:px-10 lg:pt-16">

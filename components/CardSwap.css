@@ -1,0 +1,199 @@
+.services-carousel {
+  position: relative;
+  overflow: hidden;
+}
+
+.services-carousel__inner {
+  position: relative;
+}
+
+.services-carousel__layout {
+  position: relative;
+}
+
+.services-carousel__swap-spacer {
+  pointer-events: none;
+}
+
+.services-carousel__content {
+  position: relative;
+  z-index: 2;
+  min-height: 0;
+  isolation: isolate;
+}
+
+.card-swap-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform-origin: bottom right;
+  perspective: 900px;
+  overflow: visible;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: #0a0a0c;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Stage: layout yüksekliğinde, yatayda tam viewport; kartlar layout alt/sağ köşesinde */
+.services-carousel__swap-stage {
+  --card-peek-x: 46%;
+  --card-peek-y: 48%;
+  --card-anchor-right: calc((100vw - min(100vw, 72rem)) / 2 + 1.5rem);
+  --card-anchor-bottom: 3rem;
+  position: absolute;
+  top: 0;
+  bottom: -3rem;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  z-index: 1;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.services-carousel__swap-stage .card-swap-container,
+.services-carousel__swap-stage .services-carousel__swap,
+.services-carousel__swap-stage .services-carousel__static-grid {
+  pointer-events: auto;
+}
+
+.services-carousel__swap-stage .card-swap-container,
+.services-carousel__swap-stage .services-carousel__swap {
+  position: absolute;
+  right: var(--card-anchor-right);
+  bottom: var(--card-anchor-bottom);
+  margin: 0;
+  transform: translate(var(--card-peek-x), var(--card-peek-y));
+  transform-origin: bottom right;
+  overflow: visible;
+}
+
+.services-card-swap__header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-height: 2.75rem;
+  width: calc(100% + 12px);
+  margin-left: -6px;
+  padding: 0.65rem 1rem;
+  background: var(--color-brand-blue);
+  border-bottom: 1px solid var(--color-brand-blue-dark);
+  box-sizing: border-box;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset;
+}
+
+.services-card-swap__header-text {
+  width: 100%;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  color: #fff;
+  text-wrap: balance;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.card.services-card-swap__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-brand-line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 20px 44px rgba(38, 38, 188, 0.12);
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.services-carousel__static-card.services-card-swap__card {
+  position: relative;
+  top: auto;
+  left: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-brand-line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(38, 38, 188, 0.1);
+  cursor: pointer;
+}
+
+.services-carousel__static-card .services-card-swap__header {
+  transform: none;
+}
+
+.services-carousel__swap-stage .services-carousel__static-grid {
+  position: absolute;
+  right: var(--card-anchor-right);
+  bottom: var(--card-anchor-bottom);
+  width: auto;
+  max-width: 20rem;
+  margin: 0;
+  transform: translate(var(--card-peek-x), var(--card-peek-y));
+  transform-origin: bottom right;
+}
+
+.services-card-swap__body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--color-brand-mist);
+}
+
+.services-card-swap__image {
+  position: absolute;
+  inset: 0;
+}
+
+@media (min-width: 640px) {
+  .services-carousel__swap-stage {
+    --card-anchor-right: calc((100vw - min(100vw, 72rem)) / 2 + 2.5rem);
+    --card-anchor-bottom: 4rem;
+    bottom: -4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .services-carousel__swap-stage {
+    --card-peek-x: 48%;
+    --card-peek-y: 50%;
+    --card-anchor-bottom: 5rem;
+    bottom: -5rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .services-carousel__swap-stage {
+    --card-peek-x: 44%;
+    --card-peek-y: 46%;
+  }
+}
+
+@media (max-width: 639px) {
+  .services-carousel__swap-stage {
+    --card-peek-x: 40%;
+    --card-peek-y: 42%;
+  }
+}

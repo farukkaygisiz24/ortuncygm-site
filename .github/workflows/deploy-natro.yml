@@ -1,0 +1,43 @@
+name: Site deploy (Natro FTP)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      # Statik export — Natro paylaşımlı hosting için
+      - name: Build
+        run: npm run build
+
+      - name: out/ klasörünü FTP ile yükle
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.NATRO_FTP_HOST }}
+          username: ${{ secrets.NATRO_FTP_USER }}
+          password: ${{ secrets.NATRO_FTP_PASSWORD }}
+          local-dir: out/
+          server-dir: ${{ secrets.NATRO_FTP_SITE_PATH || 'public_html/' }}
+          dangerous-clean-slate: false
+
+      - name: PHP yardımcı dosyasını FTP ile yükle
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.NATRO_FTP_HOST }}
+          username: ${{ secrets.NATRO_FTP_USER }}
+          password: ${{ secrets.NATRO_FTP_PASSWORD }}
+          local-dir: natro/
+          server-dir: ${{ secrets.NATRO_FTP_SITE_PATH || 'public_html/' }}
+          dangerous-clean-slate: false

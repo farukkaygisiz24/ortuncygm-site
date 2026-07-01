@@ -4,12 +4,22 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:server": "SERVER_DEPLOY=1 SKIP_MEVZUAT_SYNC=1 node scripts/prebuild.mjs && SERVER_DEPLOY=1 next dev",
+    "prebuild": "node scripts/prebuild.mjs",
+    "sync:mevzuat": "node scripts/sync-mevzuat-guncellemeleri.mjs --force",
+    "sync:mevzuat:list": "node scripts/sync-mevzuat-guncellemeleri.mjs --list-only --force",
+    "sync:mevzuat:details": "node scripts/sync-mevzuat-guncellemeleri.mjs --details-only",
+    "sync:mevzuat:fast": "node scripts/sync-mevzuat-guncellemeleri.mjs --details-only --fast",
+    "sync:mevzuat:parallel": "node scripts/sync-mevzuat-parallel.mjs",
     "build": "next build",
+    "build:server": "SERVER_DEPLOY=1 next build",
     "start": "next start",
+    "start:server": "next start",
     "lint": "eslint"
   },
   "dependencies": {
     "@number-flow/react": "^0.6.1",
+    "gsap": "^3.15.0",
     "next": "16.2.9",
     "react": "19.2.4",
     "react-dom": "19.2.4"

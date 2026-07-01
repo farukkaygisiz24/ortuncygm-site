@@ -4,13 +4,37 @@ export const siteInfo = {
   description: "Yetkilendirilmiş gümrük müşavirliği ve danışmanlık hizmetleri.",
 };
 
-export const nav = [
-  { label: "Ana Sayfa", href: "/" },
-  { label: "Hizmetlerimiz", href: "/hizmetler" },
-  { label: "Hakkımızda", href: "/hakkimizda" },
-  { label: "Mevzuat", href: "/mevzuat" },
-  { label: "İletişim", href: "/iletisim" },
-];
+export type NavLink = { label: string; href: string };
+
+export type NavMegaGroup = {
+  title: string;
+  href: string;
+  links: NavLink[];
+};
+
+export type NavItem =
+  | NavLink
+  | {
+      label: string;
+      children: NavLink[];
+    }
+  | {
+      label: string;
+      href: string;
+      groups: NavMegaGroup[];
+    };
+
+export function isMegaMenu(
+  item: NavItem,
+): item is { label: string; href: string; groups: NavMegaGroup[] } {
+  return "groups" in item;
+}
+
+export function isNavGroup(
+  item: NavItem,
+): item is { label: string; children: NavLink[] } {
+  return "children" in item;
+}
 
 export const hero = {
   title: "ORTUNÇ Yetkilendirilmiş Gümrük Müşavirliği A.Ş.",
@@ -26,44 +50,114 @@ export const stats = [
   { value: "3", label: "Merkez, şube ve ofis" },
 ];
 
-export const services = [
+export type ServiceCategoryKey = "gumruk" | "lojistik" | "danismanlik";
+
+export type ServiceCategory = {
+  key: ServiceCategoryKey;
+  slug: string;
+  title: string;
+  href: string;
+  description: string;
+};
+
+export const serviceCategories: ServiceCategory[] = [
   {
-    icon: "clipboard",
-    title: "Danışmanlık ve Denetim Hizmetleri",
+    key: "gumruk",
+    slug: "gumruk-hizmetleri",
+    title: "Gümrük Hizmetleri",
+    href: "/hizmetler/gumruk-hizmetleri",
     description:
-      "YYS sahibi firmaların dış ticaret işlemlerinin incelenerek yıllık Faaliyet Raporlarının düzenlenmesi, firmaların ithalat ve ihracat işlemlerinin; tarife, dış ticaret rejimi, vergi, beyannameye eklenmesi gereken belgeler ile vergilendirmeye esas kıymet ve yurt dışı/yurt içi giderlerin muhasebe kayıtlarıyla uyumlu olup olmadığının kontrol edilerek rapor düzenlenmesi.",
+      "Gümrük müşavirliği, ithalat-ihracat gümrükleme, dijital gümrük ve YGM kapsamındaki tespit işlemleriyle dış ticaret operasyonlarınızı uçtan uca destekliyoruz.",
   },
   {
-    icon: "warehouse",
-    title: "Genel ve Özel Antrepolara İlişkin Tespit İşlemleri",
+    key: "lojistik",
+    slug: "lojistik-hizmetleri",
+    title: "Lojistik Hizmetleri",
+    href: "/hizmetler/lojistik-hizmetleri",
     description:
-      "Antrepoya eşya giriş-çıkış işlemlerinin yapılması, antreponun açılması, antrepoda genişletme/daraltma, tadilat, adres değişikliği ve devir işlemlerine ilişkin başvuru dosyalarının ön incelemesinin yapılarak rapor hazırlanması (AN1, AN2, AN3, AN4, AN5, AN6, AN7, AN8)",
+      "Antrepo, depo ve sevkiyat yönetimi ile dış ticarette kurye hizmetleri dahil gümrük süreçlerinizle entegre lojistik koordinasyon sunuyoruz.",
   },
   {
-    icon: "truck",
-    title: "Geçici İthalat Rejimine İlişkin Tespit İşlemleri",
+    key: "danismanlik",
+    slug: "danismanlik-hizmetleri",
+    title: "Danışmanlık Hizmetleri",
+    href: "/hizmetler/danismanlik-hizmetleri",
     description:
-      "Kısmi ve tam muafiyet suretiyle geçici ithalatı yapılan geçici ithalat rejimine tabi tutulan eşyaya ek süre talebine ilişkin tespit işlemleri (GC1, GC2)",
-  },
-  {
-    icon: "certificate",
-    title: "Menşe Belgelerinin Sonradan Kontrol Edilmesi",
-    description:
-      "İbraz edildiği ithalatçı gümrük idaresi tarafından sonradan kontrol için gönderilen EUR1 belgelerinin şekil şartlarına uygun olup olmadığının ve belge kapsamı eşyanın Türk menşeli olup olmadığının incelenerek tespit edilen sonuçlara ilişkin tespit raporu düzenlenmesi (SK1)",
-  },
-  {
-    icon: "badge",
-    title: "Onaylanmış Kişi Statü Belgesi Alınmasına İlişkin Tespit İşlemleri",
-    description:
-      "Belirli koşulları taşıyan firmaların dış ticaret işlemlerinde bir kısım avantajlardan faydalanmasını sağlayan Onaylanmış kişi statü belgesi müracaatına ilişkin ön incelemenin yapılması (OK1)",
-  },
-  {
-    icon: "layers",
-    title: "Dahilde İşleme Rejimine İlişkin Tespit İşlemleri",
-    description:
-      "Dahilde işleme rejimi kapsamında işleme faaliyetine tabi tutulmak üzere geçici ithal edilen eşyaya ek süre talebine ilişkin tespit işlemleri (DR1, DR2)",
+      "Mevzuat, teşvik, teminat, YYS, sonradan kontrol ve damping başta olmak üzere dış ticaret danışmanlığının tüm alanlarında uzman destek veriyoruz.",
   },
 ];
+
+export function getServiceCategory(slug: string): ServiceCategory | undefined {
+  return serviceCategories.find((category) => category.slug === slug);
+}
+
+export { services, getServicesByCategory, homepageCarouselServices, getServiceHref } from "@/content/services";
+export type { ServiceItem } from "@/content/services";
+
+import { getServiceHref, getServicesByCategory } from "@/content/services";
+
+/** Header mega menü — UGM tarzı gruplu hizmet listesi */
+export function buildServicesNavGroups(): NavMegaGroup[] {
+  const gumrukHref = "/hizmetler/gumruk-hizmetleri";
+  const lojistikHref = "/hizmetler/lojistik-hizmetleri";
+  const danismanlikHref = "/hizmetler/danismanlik-hizmetleri";
+
+  const gumruk = getServicesByCategory("gumruk");
+  const gumrukOperational = gumruk.slice(0, 7);
+  const ygmTespit = gumruk.slice(7);
+
+  const toLinks = (items: ReturnType<typeof getServicesByCategory>, categoryHref: string) =>
+    items.map((s) => ({
+      label: s.title,
+      href: getServiceHref(categoryHref, s.slug),
+    }));
+
+  return [
+    {
+      title: "Gümrük Hizmetleri",
+      href: gumrukHref,
+      links: toLinks(gumrukOperational, gumrukHref),
+    },
+    {
+      title: "YGM Tespit İşlemleri",
+      href: `${gumrukHref}#ygm-tespit`,
+      links: toLinks(ygmTespit, gumrukHref),
+    },
+    {
+      title: "Lojistik Hizmetleri",
+      href: lojistikHref,
+      links: toLinks(getServicesByCategory("lojistik"), lojistikHref),
+    },
+    {
+      title: "Danışmanlık Hizmetleri",
+      href: danismanlikHref,
+      links: toLinks(getServicesByCategory("danismanlik"), danismanlikHref),
+    },
+  ];
+}
+
+export const nav: NavItem[] = [
+  { label: "Ana Sayfa", href: "/" },
+  {
+    label: "Hizmetlerimiz",
+    href: "/hizmetler",
+    groups: buildServicesNavGroups(),
+  },
+  { label: "Hakkımızda", href: "/hakkimizda" },
+  {
+    label: "Mevzuat",
+    children: [
+      { label: "Mevzuat", href: "/mevzuat" },
+      { label: "Mevzuat Güncellemeleri", href: "/mevzuat-guncellemeleri" },
+    ],
+  },
+  { label: "İletişim", href: "/iletisim" },
+];
+
+export const headerNav = nav.filter((item) => !("href" in item) || item.href !== "/iletisim");
+
+export const servicesSlogan =
+  "2008'den bu yana uzman YGM kadromuzla antrepo, rejim ve statü tespit süreçlerinizi mevzuata uygun, hızlı ve çözüm odaklı yürütüyor; dış ticaret operasyonlarınıza güven katıyoruz.";
 
 export const faq = [
   {
@@ -97,6 +191,9 @@ export const about = [
   "Şirket merkezimiz İstanbul’da olup, Bursa’da Şube Müdürlüğü, İzmir’de ise ofis olarak hizmet vermekteyiz.",
   "Kamu adına hizmet vermenin bilincinde olarak gerçekleştirilen iş ve işlemlerin gümrük mevzuatına uygun olmasının yanısıra, müşterilerimizin talep ve menfaatleri de gözetilerek çözüm odaklı, hızlı ve kaliteli hizmet sunulması temel felsefemizdir.",
 ];
+
+export const aboutHomeSummary =
+  "2008 yılından bu yana Anonim Şirket statüsünde faaliyet gösteren ORTUNÇ YGM; tam donanımlı teknolojik altyapısı, gümrük teşkilatı ve kurumsal firmalarda deneyim kazanmış uzman kadrosuyla İstanbul, Kocaeli, Bursa, Balıkesir, Manisa ve İzmir bölgelerinde hizmet vermektedir. Merkezimiz İstanbul’da, Bursa’da şubemiz ve İzmir’de ofisimiz bulunmaktadır. Kamu adına yürüttüğümüz tespit işlemlerinde mevzuata uygunluk ile müşteri menfaatini birlikte gözeten çözüm odaklı yaklaşım temel felsefemizdir.";
 
 export const contact = {
   phone: "+90 216 317 60 20",

@@ -1,0 +1,92 @@
+name: Mevzuat senkronu (Natro FTP)
+
+on:
+  schedule:
+    # Her gün 03:30 TR (00:30 UTC)
+    - cron: "30 0 * * *"
+  workflow_dispatch:
+    inputs:
+      full_sync:
+        description: "Liste + tüm eksik detaylar"
+        type: boolean
+        default: true
+
+concurrency:
+  group: mevzuat-sync-natro
+  cancel-in-progress: false
+
+jobs:
+  sync-list:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Liste senkronu
+        run: npm run sync:mevzuat:list
+
+      - name: Index + ana sayfa feed FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.NATRO_FTP_HOST }}
+          username: ${{ secrets.NATRO_FTP_USER }}
+          password: ${{ secrets.NATRO_FTP_PASSWORD }}
+          local-dir: public/data/mevzuat-guncellemeleri/
+          server-dir: ${{ secrets.NATRO_FTP_DATA_PATH || 'public_html/data/mevzuat-guncellemeleri/' }}
+          dangerous-clean-slate: false
+          exclude: |
+            **/details/**
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mevzuat-index
+          path: public/data/mevzuat-guncellemeleri/index.json
+          retention-days: 3
+
+  sync-details:
+    needs: sync-list
+    if: github.event.inputs.full_sync != 'false'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Index dosyasını indir
+        uses: actions/download-artifact@v4
+        with:
+          name: mevzuat-index
+          path: public/data/mevzuat-guncellemeleri/
+
+      - name: Detay senkronu (shard ${{ matrix.shard }}/4)
+        run: >
+          node scripts/sync-mevzuat-guncellemeleri.mjs
+          --details-only
+          --concurrency=16
+          --delay=50
+          --shard=${{ matrix.shard }}/4
+
+      - name: Detay dosyalarını FTP ile yükle
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.NATRO_FTP_HOST }}
+          username: ${{ secrets.NATRO_FTP_USER }}
+          password: ${{ secrets.NATRO_FTP_PASSWORD }}
+          local-dir: public/data/mevzuat-guncellemeleri/details/
+          server-dir: ${{ secrets.NATRO_FTP_DETAILS_PATH || 'public_html/data/mevzuat-guncellemeleri/details/' }}
+          dangerous-clean-slate: false

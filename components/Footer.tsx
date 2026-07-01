@@ -43,6 +43,15 @@ export default function Footer() {
             <Link href="/hizmetler" className="hover:text-white">
               Hizmetlerimiz
             </Link>
+            <Link href="/hizmetler/gumruk-hizmetleri" className="hover:text-white">
+              Gümrük Hizmetleri
+            </Link>
+            <Link href="/hizmetler/lojistik-hizmetleri" className="hover:text-white">
+              Lojistik Hizmetleri
+            </Link>
+            <Link href="/hizmetler/danismanlik-hizmetleri" className="hover:text-white">
+              Danışmanlık Hizmetleri
+            </Link>
             <Link href="/iletisim" className="hover:text-white">
               İletişim
             </Link>

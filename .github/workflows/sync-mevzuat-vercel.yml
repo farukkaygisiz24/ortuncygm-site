@@ -1,0 +1,48 @@
+name: Mevzuat senkronu (Vercel deploy)
+
+on:
+  schedule:
+    - cron: "30 1 * * *"
+  workflow_dispatch:
+    inputs:
+      detail_batch:
+        description: "Günlük detay limiti (0 = sadece liste)"
+        type: number
+        default: 300
+
+jobs:
+  sync-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Liste senkronu
+        run: npm run sync:mevzuat:list
+
+      - name: Detay senkronu (batch)
+        if: github.event.inputs.detail_batch != '0'
+        run: >
+          node scripts/sync-mevzuat-guncellemeleri.mjs
+          --details-only
+          --concurrency=12
+          --delay=60
+          --limit-details=${{ github.event.inputs.detail_batch || 300 }}
+
+      - name: Değişiklikleri commit et
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/mevzuat-guncellemeleri/ content/mevzuat-updates.json
+          git diff --staged --quiet || git commit -m "chore: mevzuat senkronu $(date -u +%Y-%m-%d)"
+
+      - name: Push (Vercel otomatik deploy tetikler)
+        run: git push
