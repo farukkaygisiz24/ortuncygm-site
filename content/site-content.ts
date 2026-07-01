@@ -109,15 +109,17 @@ export const contact = {
       label: "Merkez (İstanbul)",
       value:
         "Fetih Mah. Tahralı Sk. Kavakyeli İş Merkezi A Blok No:7 / 14 Ataşehir / İSTANBUL",
+      mapEmbedUrl:
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.0897511050966!2d29.07331711566177!3d41.00140872779589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cacf5b9b964299%3A0x3552ddc9bf25ea4a!2zT1JUVU7DhyBZRVRLxLBMRU5ExLBSxLBMTcSwxZ4gR8OcTVLDnEsgTcOcxZ5BVsSwUkzEsMSexLAgQS7Fni4!5e0!3m2!1str!2str!4v1646393249527!5m2!1str!2str",
     },
     {
       label: "Şube (Bursa)",
       value:
         "Bağlarbaşı Mh. 1. Eda Sk. Fevzi Bey İş Merkezi No: 4 / 1 Osmangazi / Bursa",
+      mapEmbedUrl:
+        "https://maps.google.com/maps?hl=tr&q=Ortun%C3%A7+Yetkilendirilmi%C5%9F+G%C3%BCmruk+M%C3%BC%C5%9Favirli%C4%9Fi+Bursa&z=16&output=embed",
     },
   ],
-  mapEmbedUrl:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.0897511050966!2d29.07331711566177!3d41.00140872779589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cacf5b9b964299%3A0x3552ddc9bf25ea4a!2zT1JUVU7DhyBZRVRLxLBMRU5ExLBSxLBMTcSwxZ4gR8OcTVLDnEsgTcOcxZ5BVsSwUkzEsMSexLAgQS7Fni4!5e0!3m2!1str!2str!4v1646393249527!5m2!1str!2str",
 };
 
 export const legalNotice = [

@@ -10,26 +10,28 @@ export default function Home() {
     <>
       <section className="relative grid grid-cols-1 overflow-hidden lg:grid-cols-2">
         <Image
-          src="/images/hero-bg.png"
+          src="/images/hero-text-bg.png"
           alt=""
           fill
           priority
-          className="object-cover"
+          className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-ink/90 via-brand-ink/65 to-brand-ink/30" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-ink/92 via-brand-ink/72 to-brand-ink/35" aria-hidden="true" />
         <div className="relative z-10 flex flex-col justify-center gap-6 px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
-          <h1 className="text-[32px] font-extrabold leading-[1.15] text-white sm:text-[42px] lg:text-[50px]">
-            {hero.title}
-          </h1>
-          <p className="max-w-lg text-base leading-relaxed text-[#b7b8c2] sm:text-lg">{hero.subtitle}</p>
-          <div className="mt-2 flex flex-wrap gap-4">
-            <Link href="/hizmetler" className="rounded-[10px] bg-brand-blue px-7 py-3.5 text-[15px] font-bold text-white hover:bg-brand-blue-dark">
-              Hizmetlerimiz
-            </Link>
-            <Link href="/iletisim" className="rounded-[10px] border-[1.5px] border-white/50 px-7 py-3.5 text-[15px] font-bold text-white hover:bg-white/10">
-              Bize Ulaşın
-            </Link>
+          <div>
+            <h1 className="text-[32px] font-extrabold leading-[1.15] text-white sm:text-[42px] lg:text-[50px]">
+              {hero.title}
+            </h1>
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-[#b7b8c2] sm:text-lg">{hero.subtitle}</p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link href="/hizmetler" className="rounded-[10px] bg-brand-blue px-7 py-3.5 text-[15px] font-bold text-white hover:bg-brand-blue-dark">
+                Hizmetlerimiz
+              </Link>
+              <Link href="/iletisim" className="rounded-[10px] border-[1.5px] border-white/50 px-7 py-3.5 text-[15px] font-bold text-white hover:bg-white/10">
+                Bize Ulaşın
+              </Link>
+            </div>
           </div>
         </div>
         <div className="relative z-10 flex items-center justify-center p-8 lg:p-14">
@@ -37,7 +39,7 @@ export default function Home() {
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[20px]">
               <Image
                 src="/images/hero-corporate.png"
-                alt="Liman konteyner terminali — uluslararası ticaret ve lojistik"
+                alt="Modern lojistik merkezi ve antrepo tesisi — uluslararası ticaret"
                 fill
                 priority
                 className="object-cover"
@@ -73,12 +75,12 @@ export default function Home() {
       </section>
 
       <section className="relative overflow-hidden bg-white px-6 py-16 sm:px-10 lg:py-28">
-        <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.15]" aria-hidden="true">
+        <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.14]" aria-hidden="true">
           <Image
             src="/images/logo-watermark-transparent.png"
             alt=""
             fill
-            className="object-contain object-center p-6 sm:p-10 lg:p-12"
+            className="object-contain object-center p-2 sm:p-4 lg:p-6"
             sizes="(max-width: 1410px) 100vw, 1410px"
           />
         </div>

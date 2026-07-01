@@ -23,7 +23,7 @@ export default function Footer() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-16 sm:grid-cols-2 sm:px-10 lg:grid-cols-4">
+      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-16 sm:grid-cols-2 sm:px-10 lg:grid-cols-6">
         <div>
           <Image
             src="/images/logo.png"
@@ -71,9 +71,14 @@ export default function Footer() {
             <a href={`mailto:${contact.email}`} className="hover:text-white">
               {contact.email}
             </a>
+          </div>
+        </div>
+        <div className="sm:col-span-2 lg:col-span-2">
+          <p className="mb-4 text-xs font-bold uppercase tracking-widest text-white">Adres</p>
+          <div className="grid grid-cols-1 gap-6 text-[14.5px] sm:grid-cols-2 sm:gap-5">
             {contact.addresses.map((address) => (
               <div key={address.label} className="leading-relaxed text-[#9d9ea8]">
-                <span className="block text-[12px] font-semibold uppercase tracking-wide text-[#b8b9c2]">
+                <span className="mb-1 block text-[12px] font-semibold uppercase tracking-wide text-[#b8b9c2]">
                   {address.label}
                 </span>
                 <span>{address.value}</span>
