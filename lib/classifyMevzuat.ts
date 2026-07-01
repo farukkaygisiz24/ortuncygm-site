@@ -12,7 +12,7 @@ export type MevzuatItem = {
   isListItem: boolean;
 };
 
-const ARTICLE_RE = /^(MADDE(\s\d+)?|GE[Cç][İI]C[İI]\s+MADDE)$/i;
+const ARTICLE_RE = /^(MADDE(\s\d+)?|GE[Cç][İI]C[İI]\s+MADDE(\s+\d+)?)$/i;
 
 export function classifyMevzuat(paragraphs: string[]): MevzuatItem[] {
   return paragraphs.map((text, i) => {

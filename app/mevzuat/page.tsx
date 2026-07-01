@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
-import { mevzuatCitation, mevzuatParagraphs, mevzuatTitle } from "@/content/mevzuat";
+import {
+  mevzuatAmendmentCitation,
+  mevzuatAmendmentUrl,
+  mevzuatCitation,
+  mevzuatParagraphs,
+  mevzuatSourceUrl,
+  mevzuatTitle,
+} from "@/content/mevzuat";
 import { classifyMevzuat } from "@/lib/classifyMevzuat";
 import PageHeader from "@/components/PageHeader";
 
@@ -13,7 +20,11 @@ export default function MevzuatPage() {
 
   return (
     <>
-      <PageHeader breadcrumb="Mevzuat" title={mevzuatTitle} subtitle={mevzuatCitation} />
+      <PageHeader
+        breadcrumb="Mevzuat"
+        title={mevzuatTitle}
+        subtitle={`${mevzuatCitation} · ${mevzuatAmendmentCitation}`}
+      />
       <section className="bg-white px-6 py-14 sm:px-10 lg:py-16">
         <div className="mx-auto flex max-w-3xl flex-col">
           {items.map((item, i) => {
@@ -57,6 +68,16 @@ export default function MevzuatPage() {
               </p>
             );
           })}
+          <p className="mt-12 border-t border-brand-line pt-6 text-[13px] leading-relaxed text-brand-muted">
+            Kaynaklar:{" "}
+            <a href={mevzuatSourceUrl} target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:underline">
+              Ana tebliğ (31240)
+            </a>
+            {" · "}
+            <a href={mevzuatAmendmentUrl} target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:underline">
+              Değişiklik tebliği (32426)
+            </a>
+          </p>
         </div>
       </section>
     </>
