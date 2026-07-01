@@ -185,15 +185,59 @@
 }
 
 @media (max-width: 1023px) {
-  .services-carousel__swap-stage {
-    --card-peek-x: 44%;
-    --card-peek-y: 46%;
+  .services-carousel {
+    overflow: visible;
   }
-}
 
-@media (max-width: 639px) {
+  .services-carousel__swap-spacer {
+    display: none;
+  }
+
+  .services-carousel__layout {
+    gap: 0;
+  }
+
+  .services-carousel__content {
+    z-index: auto;
+    padding-bottom: 0.25rem;
+  }
+
   .services-carousel__swap-stage {
-    --card-peek-x: 40%;
-    --card-peek-y: 42%;
+    --card-peek-x: 0;
+    --card-peek-y: 0;
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    margin-left: 0;
+    margin-top: 1.75rem;
+    min-height: calc(var(--swap-card-height, 12rem) + var(--swap-stack-pad, 3rem) + 1rem);
+    padding-top: var(--swap-stack-pad, 0px);
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    pointer-events: auto;
+    z-index: 1;
+  }
+
+  .services-carousel__swap-stage .card-swap-container,
+  .services-carousel__swap-stage .services-carousel__swap {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    margin: 0 auto;
+    transform: none;
+    transform-origin: center top;
+  }
+
+  .services-carousel__swap-stage .services-carousel__static-grid {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    margin: 0 auto;
+    transform: none;
+    max-width: 100%;
   }
 }

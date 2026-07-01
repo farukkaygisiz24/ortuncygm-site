@@ -11,6 +11,8 @@
     "sync:mevzuat:details": "node scripts/sync-mevzuat-guncellemeleri.mjs --details-only",
     "sync:mevzuat:fast": "node scripts/sync-mevzuat-guncellemeleri.mjs --details-only --fast",
     "sync:mevzuat:parallel": "node scripts/sync-mevzuat-parallel.mjs",
+    "sync:mevzuat:full": "node scripts/sync-mevzuat-until-complete.mjs",
+    "sync:mevzuat:status": "node scripts/mevzuat-sync-status.mjs",
     "build": "next build",
     "build:server": "SERVER_DEPLOY=1 next build",
     "start": "next start",

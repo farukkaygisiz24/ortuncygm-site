@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import CardSwap, { Card } from "@/components/CardSwap";
 import type { ServiceItem } from "@/content/services";
 import { servicesSlogan, type ServiceCategoryKey } from "@/content/site-content";
@@ -27,17 +27,22 @@ const CARD_HEADER_STACK_GAP = 46;
 /** lg grid’de sağ sütun ~%46; kart boyutu buna göre, görünür alan tüm section */
 const RIGHT_COLUMN_WIDTH_RATIO = 0.46;
 
-function fitCardSize(columnWidth: number, stageHeight: number) {
-  let width = Math.round(columnWidth / CARD_PEEK_RATIO);
+function fitCardSize(columnWidth: number, stageHeight: number, isDesktopSplit: boolean) {
+  let width = isDesktopSplit
+    ? Math.round(columnWidth / CARD_PEEK_RATIO)
+    : Math.min(Math.round(columnWidth * 0.9), 340);
+
   let height = Math.round((width * 9) / 16);
 
-  const maxHeight = Math.round(stageHeight * 0.96);
-  if (height > maxHeight) {
-    height = maxHeight;
-    width = Math.round((height * 16) / 9);
+  if (isDesktopSplit) {
+    const maxHeight = Math.round(stageHeight * 0.96);
+    if (height > maxHeight) {
+      height = maxHeight;
+      width = Math.round((height * 16) / 9);
+    }
   }
 
-  width = Math.max(width, 300);
+  width = Math.max(width, isDesktopSplit ? 300 : 260);
   height = Math.round((width * 9) / 16);
 
   return { width, height };
@@ -51,6 +56,7 @@ export default function ServicesCarousel({ items }: { items: readonly ServiceIte
   const innerRef = useRef<HTMLDivElement>(null);
   const layoutRef = useRef<HTMLDivElement>(null);
   const [cardSize, setCardSize] = useState({ width: CARD_WIDTH, height: CARD_HEIGHT });
+  const [isDesktopSplit, setIsDesktopSplit] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
 
   const swapItems = useMemo(() => items.slice(0, SWAP_CARD_LIMIT), [items]);
@@ -66,11 +72,12 @@ export default function ServicesCarousel({ items }: { items: readonly ServiceIte
       const innerRect = inner.getBoundingClientRect();
       const layoutRect = layout.getBoundingClientRect();
       if (sectionRect.width > 0 && layoutRect.height > 0) {
-        const columnWidth =
-          sectionRect.width >= 1024
-            ? innerRect.width * RIGHT_COLUMN_WIDTH_RATIO
-            : innerRect.width;
-        setCardSize(fitCardSize(columnWidth, layoutRect.height));
+        const desktopSplit = sectionRect.width >= 1024;
+        const columnWidth = desktopSplit
+          ? innerRect.width * RIGHT_COLUMN_WIDTH_RATIO
+          : innerRect.width;
+        setIsDesktopSplit(desktopSplit);
+        setCardSize(fitCardSize(columnWidth, layoutRect.height, desktopSplit));
       }
     };
 
@@ -89,6 +96,11 @@ export default function ServicesCarousel({ items }: { items: readonly ServiceIte
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
   }, []);
+
+  const stackGap = isDesktopSplit
+    ? Math.max(CARD_HEADER_STACK_GAP, Math.round(cardSize.height * 0.12))
+    : 24;
+  const stackTopPad = reduceMotion ? 0 : Math.max(0, (swapItems.length - 1) * stackGap);
 
   return (
     <section
@@ -113,12 +125,21 @@ export default function ServicesCarousel({ items }: { items: readonly ServiceIte
             </p>
           </div>
           <div
-            className="services-carousel__swap-spacer min-h-[13rem] sm:min-h-[15rem] lg:min-h-[19rem] xl:min-h-[21rem]"
+            className="services-carousel__swap-spacer hidden min-h-[19rem] lg:block xl:min-h-[21rem]"
             aria-hidden
           />
         </div>
 
-        <div className="services-carousel__swap-stage">
+        <div
+          className="services-carousel__swap-stage"
+          style={
+            {
+              "--swap-card-height": `${cardSize.height}px`,
+              "--swap-stack-gap": `${stackGap}px`,
+              "--swap-stack-pad": `${stackTopPad}px`,
+            } as CSSProperties
+          }
+        >
           {reduceMotion ? (
             <div className="services-carousel__static-grid">
               {swapItems.map((service) => (
@@ -149,10 +170,7 @@ export default function ServicesCarousel({ items }: { items: readonly ServiceIte
               width={cardSize.width}
               height={cardSize.height}
               cardDistance={Math.round(cardSize.width * 0.045)}
-              verticalDistance={Math.max(
-                CARD_HEADER_STACK_GAP,
-                Math.round(cardSize.height * 0.12),
-              )}
+              verticalDistance={stackGap}
               delay={5000}
               pauseOnHover={false}
               skewAmount={CARD_SKEW}
