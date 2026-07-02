@@ -271,7 +271,7 @@ export const aboutPage = {
 };
 
 export const aboutHomeSummary =
-  "2008 yılından bu yana Anonim Şirket statüsünde faaliyet gösteren ORTUNÇ YGM; tam donanımlı teknolojik altyapısı, gümrük teşkilatı ve kurumsal firmalarda deneyim kazanmış uzman kadrosuyla İstanbul, Kocaeli, Bursa, Balıkesir, Manisa ve İzmir bölgelerinde hizmet vermektedir. Merkezimiz İstanbul’da, Bursa’da şubemiz ve İzmir’de ofisimiz bulunmaktadır. Kamu adına yürüttüğümüz tespit işlemlerinde mevzuata uygunluk ile müşteri menfaatini birlikte gözeten çözüm odaklı yaklaşım temel felsefemizdir.";
+  "ORTUNÇ Yetkilendirilmiş Gümrük Müşavirliği A.Ş., 2008 yılından bu yana 4458 sayılı Gümrük Kanunu ve ilgili mevzuat çerçevesinde Yetkilendirilmiş Gümrük Müşavirliği hizmetleri sunmaktadır. Bağımsızlık, tarafsızlık, şeffaflık ve mevzuata tam uyum ilkeleri doğrultusunda faaliyet gösteren şirketimiz; güçlü teknolojik altyapısı, deneyimli kadrosu ve kurumsal yaklaşımıyla denetim, tespit ve raporlama süreçlerini güvenilir ve etkin bir anlayışla yürütmektedir. İstanbul merkez ofisimiz, Bursa Şube Müdürlüğümüz ve İzmir Ofisimiz ile Türkiye genelinde hizmet sunarak dış ticaret süreçlerinin güvenilir ve mevzuata uygun şekilde yürütülmesine katkı sağlamaktayız.";
 
 export const contact = {
   phone: "+90 216 317 60 20",

@@ -32,7 +32,7 @@ function withSlugs(
   return items.map((item) => ({ ...item, slug: slugifyService(item.title) }));
 }
 
-/** Yerel hizmet görselleri (Unsplash kaynaklı, static export için indirildi) */
+/** Yerel hizmet görselleri */
 const U = {
   customsOffice: "/images/services/customs-office.jpg",
   importPort: "/images/services/import-port.jpg",
@@ -41,23 +41,14 @@ const U = {
   digital: "/images/services/digital.jpg",
   documents: "/images/services/documents.jpg",
   laboratory: "/images/services/laboratory.jpg",
-  warehouse: "/images/services/warehouse.jpg",
-  cargoBoxes: "/images/services/cargo-boxes.jpg",
-  certificate: "/images/services/certificate.jpg",
-  corporate: "/images/services/corporate.jpg",
-  factory: "/images/services/factory.jpg",
-  trucking: "/images/services/trucking.jpg",
-  courier: "/images/services/courier.jpg",
+  antrepoTespit: "/images/services/antrepo-tespit.jpg",
+  oksbOnInceleme: "/images/services/oksb-on-inceleme.jpg",
+  yysDanismanligi: "/images/services/yys-danismanligi.jpg",
+  dirTespit: "/images/services/dir-tespit.jpg",
+  geciciIthalat: "/images/services/gecici-ithalat.jpg",
+  menseKontrol: "/images/services/mense-kontrol.jpg",
   teamMeeting: "/images/services/team-meeting.jpg",
-  legislation: "/images/services/legislation.jpg",
-  finance: "/images/services/finance.jpg",
-  growth: "/images/services/growth.jpg",
-  security: "/images/services/security.jpg",
-  officeTeam: "/images/services/office-team.jpg",
   inspection: "/images/services/inspection.jpg",
-  market: "/images/services/market.jpg",
-  engineering: "/images/services/engineering.jpg",
-  handshake: "/images/services/handshake.jpg",
 } as const;
 
 /** UGM hizmet yapısına paralel, ORTUNÇ ifadesiyle hazırlanmış hizmet kataloğu. */
@@ -124,7 +115,7 @@ const serviceCatalog: Omit<ServiceItem, "slug">[] = [
     category: "gumruk",
     carouselTitle: "Antrepo Tespit İşlemleri (AN1 – AN8)",
     title: "Antrepo Tespit İşlemleri (AN1 – AN8)",
-    image: U.warehouse,
+    image: U.antrepoTespit,
     description:
       "Gümrük antrepolarının açılış, genişletme, daraltma, devir ve adres değişikliği işlemleri ile antrepolara eşya giriş-çıkış süreçlerinin mevzuata uygunluğunu tespit ediyor ve raporlarını eksiksiz tanzim ediyoruz.",
   },
@@ -133,7 +124,7 @@ const serviceCatalog: Omit<ServiceItem, "slug">[] = [
     category: "gumruk",
     carouselTitle: "Geçici İthalat Rejimi Tespitleri (GC1 - GC2)",
     title: "Geçici İthalat Rejimine İlişkin Tespit İşlemleri (GC1, GC2)",
-    image: U.exportShip,
+    image: U.geciciIthalat,
     description:
       "Geçici ithalat rejimi kapsamında Türkiye gümrük bölgesine getirilen eşyaların yasal durum ve kullanım amaçlarına uygunluğunu denetliyor, süre uzatım taleplerine esas teşkil eden raporları uzmanlıkla hazırlıyoruz.",
   },
@@ -142,7 +133,7 @@ const serviceCatalog: Omit<ServiceItem, "slug">[] = [
     category: "gumruk",
     carouselTitle: "Menşe Belgelerinin Sonradan Kontrolü (SK1)",
     title: "Menşe Belgelerinin Sonradan Kontrol Edilmesi (SK1)",
-    image: U.globalTrade,
+    image: U.menseKontrol,
     description:
       "İhraç edilen eşyaların menşe kurallarına uygunluğunu ve menşe ispat belgelerinin doğruluğunu mevzuat çerçevesinde inceliyor, sonradan kontrol işlemlerine esas teşkil eden raporlama süreçlerini eksiksiz yönetiyoruz.",
   },
@@ -151,7 +142,7 @@ const serviceCatalog: Omit<ServiceItem, "slug">[] = [
     category: "gumruk",
     carouselTitle: "Onaylanmış Kişi Statüsü (OKSB)",
     title: "Onaylanmış Kişi Statü Belgesi (OKSB) Ön İncelemesi",
-    image: U.legislation,
+    image: U.oksbOnInceleme,
     description:
       "Dış ticaret işlemlerinde büyük kolaylıklar sağlayan OKSB müracaatlarının ön inceleme süreçlerini gerçekleştiriyor; aranan kurumsal ve mali şartları titizlikle inceleyerek gerekli tespit raporlarını hazırlıyoruz.",
   },
@@ -160,7 +151,7 @@ const serviceCatalog: Omit<ServiceItem, "slug">[] = [
     category: "gumruk",
     carouselTitle: "Dahilde İşleme Rejimi (DİR) Tespit İşlemleri",
     title: "Dahilde İşleme Rejimi DR1 ve DR2 Tespit Raporları",
-    image: U.factory,
+    image: U.dirTespit,
     description:
       "Dahilde İşleme İzin Belgesi (DİİB) kapsamındaki tüm girdi, malzeme ve bileşenlerin üretimde kullanım durumlarını tespit ediyor, ithal eşyalarının rejim şartlarına uygunluğunu inceliyor ve DR1-DR2 raporlarınızı güvenle hazırlıyoruz.",
   },
@@ -178,7 +169,7 @@ const serviceCatalog: Omit<ServiceItem, "slug">[] = [
     icon: "badge",
     category: "danismanlik",
     title: "Yetkilendirilmiş Yükümlü Statü (YYS) Danışmanlığı",
-    image: U.handshake,
+    image: U.yysDanismanligi,
     description:
       "Global ticarette en üst düzey prestij ve kolaylık sağlayan Yetkilendirilmiş Yükümlü Statüsü (YYS) belgelendirme süreçlerinizi yönetiyor; kurumsal dış ticaret risk analizleri ve önleyici iç denetim hizmetleriyle firmanızı geleceğe hazırlıyoruz.",
   },
